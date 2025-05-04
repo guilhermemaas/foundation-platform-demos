@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fast-api-hello.fullname" . }}
+  name: {{ .Values.name }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.name }}
   selector:
     matchLabels:
-      app: {{ include "fast-api-hello.name" . }}
+      app: {{ .Values.name }}
   template:
     metadata:
       labels:
-        app: {{ include "fast-api-hello.name" . }}
+        app: {{ .Values.name }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

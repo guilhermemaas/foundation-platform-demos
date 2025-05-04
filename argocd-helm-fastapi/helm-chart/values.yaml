@@ -9,3 +9,6 @@ env:
   name: "gmaas"
 
 port: 8585
+
+name: argocd-helm-fastapi
+namespace: foundation-platform-demos
