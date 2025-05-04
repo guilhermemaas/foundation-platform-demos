@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1
+kind: Application
+metadata:
+  name: argocd-helm-fastapi
+  namespace: argocd
+spec:
+  project: foundation-platform-demos
+  source:
+    repoURL: https://github.com/guilhermemaas/foundation-platform-demos/argocd-helm-fastapi
+    targetRevision: HEAD
+    path: helm-chart
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: foundation-platform-demos
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
