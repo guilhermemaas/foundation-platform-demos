@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fleetwatch.fullname" . }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "fleetwatch.name" . }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 5173

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fleetwatch.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "fleetwatch.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "fleetwatch.name" . }}
+    spec:
+      containers:
+        - name: vite
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5173
+          env:
+            - name: ENVIRONMENT
+              value: "{{ .Values.environment }}"
