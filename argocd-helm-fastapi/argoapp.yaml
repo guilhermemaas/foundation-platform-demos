@@ -1,14 +1,14 @@
-apiVersion: argoproj.io/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argocd-helm-fastapi
   namespace: argocd
 spec:
-  project: foundation-platform-demos
+  project: default
   source:
-    repoURL: https://github.com/guilhermemaas/foundation-platform-demos/argocd-helm-fastapi
+    repoURL: https://github.com/guilhermemaas/foundation-platform-demos
     targetRevision: HEAD
-    path: helm-chart
+    path: argocd-helm-fastapi/helm-chart
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: foundation-platform-demos
