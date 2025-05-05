@@ -1,24 +1,7 @@
-version: '3.8'
+version: "3.9"
+
 services:
-  mcp-server:
-    build: ./mcp-server
-    ports:
-      - "8000:8000"
-    environment:
-      - ZABBIX_API_URL=http://seu_zabbix/api_jsonrpc.php
-      - ZABBIX_USER=usuario
-      - ZABBIX_PASSWORD=senha
-
-  agente-llm:
-    build: ./agente-llm
-    environment:
-      - MCP_SERVER_URL=http://mcp-server:8000
-      - OPENAI_API_KEY=sua_openai_key
-      - DISCORD_WEBHOOK_URL=sua_webhook_url
-    depends_on:
-      - mcp-server
-
-  zabbix-db:
+  db:
     image: postgres:13-alpine
     container_name: zabbix-postgres
     restart: unless-stopped
@@ -35,9 +18,9 @@ services:
     container_name: zabbix-server
     restart: unless-stopped
     depends_on:
-      - zabbix-db
+      - db
     environment:
-      DB_SERVER_HOST: zabbix-db
+      DB_SERVER_HOST: db
       POSTGRES_USER: zabbix
       POSTGRES_PASSWORD: zabbix
       POSTGRES_DB: zabbix
@@ -58,7 +41,7 @@ services:
       - "8080:8080"
     environment:
       # conexão com o banco
-      DB_SERVER_HOST: zabbix-db
+      DB_SERVER_HOST: db
       POSTGRES_USER: zabbix
       POSTGRES_PASSWORD: zabbix
       POSTGRES_DB: zabbix
@@ -73,4 +56,4 @@ volumes:
   pgdata:
   zbx_server_scripts:
   zbx_server_modules:
-  zbx_web_modules:      
+  zbx_web_modules:
