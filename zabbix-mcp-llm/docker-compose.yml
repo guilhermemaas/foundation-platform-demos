@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  mcp-server:
+    build: ./mcp-server
+    ports:
+      - "8000:8000"
+    environment:
+      - ZABBIX_API_URL=http://seu_zabbix/api_jsonrpc.php
+      - ZABBIX_USER=usuario
+      - ZABBIX_PASSWORD=senha
+  agente-llm:
+    build: ./agente-llm
+    environment:
+      - MCP_SERVER_URL=http://mcp-server:8000
+      - OPENAI_API_KEY=sua_openai_key
+      - DISCORD_WEBHOOK_URL=sua_webhook_url
+    depends_on:
+      - mcp-server 
